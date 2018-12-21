@@ -1,18 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
+import "./App.css";
+
+import Bars from "./Bars.js";
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      list: ["snickers", "milky way", "reeses", "whatchamacallit", "caramelo"],
+      newBar: ""
+    };
+  }
+  submitHandler = newBar => {
+    this.state.list.push(newBar);
+    this.setState({ newBar: "" });
+  };
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <div>
+          <input
+            onChange={e => {
+              this.setState({ newBar: e.target.value });
+            }}
+            value={this.state.newBar}
+            placeholder={"favorite bar?"}
+          />
+          <button onClick={() => this.submitHandler(this.state.newBar)}>
+            Add Bar
+          </button>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Bars list={this.state.list} />
       </div>
     );
   }
